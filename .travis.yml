@@ -1,0 +1,12 @@
+sudo: required
+
+services:
+  - docker
+
+install:
+  - docker build --tag bodsch/docker-redis .
+  - docker run --detach --name redis bodsch/docker-redis
+
+script:
+  - docker ps | grep -q redis
+
