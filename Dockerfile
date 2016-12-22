@@ -1,5 +1,5 @@
 
-FROM bodsch/docker-alpine-base:1610-02
+FROM bodsch/docker-alpine-base:1612-01
 
 MAINTAINER Bodo Schulz <bodo@boone-schulz.de>
 
@@ -9,18 +9,23 @@ LABEL version="0.9.3"
 
 RUN \
   apk --no-cache update && \
-  apk --no-cache upgrade
-
-RUN \
+  apk --no-cache upgrade && \
   apk --quiet add \
-    redis \
-    inotify-tools
-
-RUN \
+    redis && \
+  apk del --purge \
+    build-base \
+    supervisor \
+    bash \
+    nano \
+    curl \
+    ca-certificates \
+    ruby-dev \
+    ruby-io-console \
+    tree && \
   rm -rf /var/cache/apk/*
 
 COPY rootfs/ /
 
-CMD /bin/bash
+ENTRYPOINT /usr/bin/redis-server 
 
-# ENTRYPOINT [ '/opt/startup.sh' ]
+CMD /etc/redis.conf
