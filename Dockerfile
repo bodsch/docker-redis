@@ -1,9 +1,9 @@
 
-FROM bodsch/docker-alpine-base:1612-01
+FROM bodsch/docker-alpine-base:1701-02
 
 MAINTAINER Bodo Schulz <bodo@boone-schulz.de>
 
-LABEL version="0.9.3"
+LABEL version="1.0.0"
 
 # ---------------------------------------------------------------------------------------
 
@@ -26,6 +26,5 @@ RUN \
 
 COPY rootfs/ /
 
-ENTRYPOINT /usr/bin/redis-server 
+CMD [ "/usr/bin/redis-server", "/etc/redis.conf" ]
 
-CMD /etc/redis.conf
