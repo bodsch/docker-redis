@@ -5,6 +5,8 @@ MAINTAINER Bodo Schulz <bodo@boone-schulz.de>
 
 LABEL version="1.0.0"
 
+EXPOSE 6379
+
 # ---------------------------------------------------------------------------------------
 
 RUN \
@@ -12,6 +14,7 @@ RUN \
   apk --no-cache upgrade && \
   apk --quiet add \
     redis && \
+  mv /etc/redis.conf /etc/redis.conf-DIST && \
   apk del --purge \
     build-base \
     supervisor \
