@@ -1,31 +1,32 @@
 
-FROM bodsch/docker-alpine-base:1612-01
+FROM alpine:latest
 
 MAINTAINER Bodo Schulz <bodo@boone-schulz.de>
 
-LABEL version="0.9.3"
+LABEL version="1702-02"
+
+ENV \
+  ALPINE_MIRROR="dl-cdn.alpinelinux.org" \
+  ALPINE_VERSION="v3.5" \
+  TERM=xterm
+
+EXPOSE 6379
 
 # ---------------------------------------------------------------------------------------
 
 RUN \
+  echo "http://${ALPINE_MIRROR}/alpine/${ALPINE_VERSION}/main"       > /etc/apk/repositories && \
+  echo "http://${ALPINE_MIRROR}/alpine/${ALPINE_VERSION}/community" >> /etc/apk/repositories && \
   apk --no-cache update && \
   apk --no-cache upgrade && \
   apk --quiet add \
     redis && \
-  apk del --purge \
-    build-base \
-    supervisor \
-    bash \
-    nano \
-    curl \
-    ca-certificates \
-    ruby-dev \
-    ruby-io-console \
-    tree && \
-  rm -rf /var/cache/apk/*
+  mv /etc/redis.conf /etc/redis.conf-DIST && \
+  rm -rf \
+    /tmp/* \
+    /var/cache/apk/*
 
 COPY rootfs/ /
 
-ENTRYPOINT /usr/bin/redis-server 
+CMD [ "/usr/bin/redis-server", "/etc/redis.conf" ]
 
-CMD /etc/redis.conf
