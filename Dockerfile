@@ -3,14 +3,27 @@ FROM alpine:latest
 
 MAINTAINER Bodo Schulz <bodo@boone-schulz.de>
 
-LABEL version="1704-01"
+LABEL version="1705-01"
 
 ENV \
   ALPINE_MIRROR="dl-cdn.alpinelinux.org" \
-  ALPINE_VERSION="v3.5" \
-  TERM=xterm
+  ALPINE_VERSION="edge" \
+  TERM=xterm \
+  BUILD_DATE="2017-05-01" \
+  VERSION="3.2.8"
 
 EXPOSE 6379
+
+LABEL org.label-schema.build-date=${BUILD_DATE} \
+      org.label-schema.name="redis Docker Image" \
+      org.label-schema.description="Inofficial redis Docker Image" \
+      org.label-schema.url="https://redis.io/" \
+      org.label-schema.vcs-url="https://github.com/bodsch/docker-redis" \
+      org.label-schema.vendor="Bodo Schulz" \
+      org.label-schema.version=${VERSION} \
+      org.label-schema.schema-version="1.0" \
+      com.microscaling.docker.dockerfile="/Dockerfile" \
+      com.microscaling.license="GNU General Public License v3.0"
 
 # ---------------------------------------------------------------------------------------
 

@@ -30,10 +30,10 @@ shell:
 		run \
 		--rm \
 		--interactive \
-		--publish=6379:6379 \
 		--tty \
 		--hostname=${CONTAINER} \
 		--name=${CONTAINER} \
+		--entrypoint "" \
 		$(IMAGE_NAME) \
 		/bin/sh
 
