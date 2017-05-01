@@ -13,9 +13,11 @@ Minimal Image with Redis
 [microbadger]: https://microbadger.com/images/bodsch/docker-redis
 [travis]: https://travis-ci.org/bodsch/docker-redis
 
+
 # Build
 
 Your can use the included Makefile.
+
 
 To build the Container: `make build`
 
