@@ -9,6 +9,11 @@ build:
 		--rm --tag=$(IMAGE_NAME) .
 	@echo Image tag: ${IMAGE_NAME}
 
+clean:
+	docker \
+		rmi \
+		${IMAGE_NAME}
+
 run:
 	docker \
 		run \
@@ -25,12 +30,12 @@ shell:
 		run \
 		--rm \
 		--interactive \
-		--publish=6379:6379 \
 		--tty \
 		--hostname=${CONTAINER} \
 		--name=${CONTAINER} \
+		--entrypoint "" \
 		$(IMAGE_NAME) \
-		/bin/bash
+		/bin/sh
 
 exec:
 	docker \
