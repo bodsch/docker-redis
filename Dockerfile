@@ -1,17 +1,16 @@
 
-FROM alpine:3.6
-
-MAINTAINER Bodo Schulz <bodo@boone-schulz.de>
+FROM alpine:3.7
 
 ENV \
   TERM=xterm \
-  BUILD_DATE="2017-11-28" \
+  BUILD_DATE="2018-01-18" \
   VERSION="3.2.8"
 
 EXPOSE 6379
 
 LABEL \
-  version="1711" \
+  version="1801" \
+  maintainer="Bodo Schulz <bodo@boone-schulz.de>" \
   org.label-schema.build-date=${BUILD_DATE} \
   org.label-schema.name="redis Docker Image" \
   org.label-schema.description="Inofficial redis Docker Image" \
@@ -28,7 +27,7 @@ LABEL \
 RUN \
   apk update --no-cache && \
   apk upgrade --no-cache && \
-  apk add --quiet \
+  apk add --quiet --no-cache \
     redis && \
   mv /etc/redis.conf /etc/redis.conf-DIST && \
   rm -rf \
@@ -41,7 +40,7 @@ HEALTHCHECK \
   --interval=5s \
   --timeout=2s \
   --retries=12 \
-  CMD ping="$(redis-cli -h "127.0.0.1" ping)" && [ "$ping" = 'PONG' ] || exit 1
+  CMD ping="$(redis-cli -h "127.0.0.1" ping)" && [[ "$ping" = 'PONG' ]] || exit 1
 
 ENTRYPOINT [ "/usr/bin/redis-server" ]
 
